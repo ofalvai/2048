@@ -1,17 +1,6 @@
 function KeyboardInputManager() {
   this.events = {};
 
-  if (window.navigator.msPointerEnabled) {
-    //Internet Explorer 10 style
-    this.eventTouchstart    = "MSPointerDown";
-    this.eventTouchmove     = "MSPointerMove";
-    this.eventTouchend      = "MSPointerUp";
-  } else {
-    this.eventTouchstart    = "touchstart";
-    this.eventTouchmove     = "touchmove";
-    this.eventTouchend      = "touchend";
-  }
-
   this.listen();
 }
 
@@ -66,7 +55,7 @@ KeyboardInputManager.prototype.listen = function () {
 
   var retry = document.querySelector(".retry-button");
   retry.addEventListener("click", this.restart.bind(this));
-  retry.addEventListener(this.eventTouchend, this.restart.bind(this));
+  retry.addEventListener("touchend", this.restart.bind(this));
 
   var keepPlaying = document.querySelector(".keep-playing-button");
   keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
@@ -76,40 +65,25 @@ KeyboardInputManager.prototype.listen = function () {
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
 
-  gameContainer.addEventListener(this.eventTouchstart, function (event) {
-    if (( !window.navigator.msPointerEnabled && event.touches.length > 1) || event.targetTouches > 1) return;
-    
-    if(window.navigator.msPointerEnabled){
-        touchStartClientX = event.pageX;
-        touchStartClientY = event.pageY;
-    } else {
-        touchStartClientX = event.touches[0].clientX;
-        touchStartClientY = event.touches[0].clientY;
-    }
-    
+  gameContainer.addEventListener("touchstart", function (event) {
+    if (event.touches.length > 1) return;
+
+    touchStartClientX = event.touches[0].clientX;
+    touchStartClientY = event.touches[0].clientY;
     event.preventDefault();
   });
 
-  gameContainer.addEventListener(this.eventTouchmove, function (event) {
+  gameContainer.addEventListener("touchmove", function (event) {
     event.preventDefault();
   });
 
-  gameContainer.addEventListener(this.eventTouchend, function (event) {
-    if (( !window.navigator.msPointerEnabled && event.touches.length > 0) || event.targetTouches > 0) return;
+  gameContainer.addEventListener("touchend", function (event) {
+    if (event.touches.length > 0) return;
 
-    var touchEndClientX, touchEndClientY;
-    if(window.navigator.msPointerEnabled){
-        touchEndClientX = event.pageX;
-        touchEndClientY = event.pageY;
-    } else {
-        touchEndClientX = event.changedTouches[0].clientX;
-        touchEndClientY = event.changedTouches[0].clientY;
-    }
-
-    var dx = touchEndClientX - touchStartClientX;
+    var dx = event.changedTouches[0].clientX - touchStartClientX;
     var absDx = Math.abs(dx);
 
-    var dy = touchEndClientY - touchStartClientY;
+    var dy = event.changedTouches[0].clientY - touchStartClientY;
     var absDy = Math.abs(dy);
 
     if (Math.max(absDx, absDy) > 10) {

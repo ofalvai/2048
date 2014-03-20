@@ -45,6 +45,9 @@ GameManager.prototype.setup = function () {
   // Add the initial tiles
   this.addStartTiles();
 
+  // Reveal the tiles' numbers for the first time
+  this.grid.doFlash = true;
+
   // Update the actuator
   this.actuate();
 };
@@ -141,6 +144,10 @@ GameManager.prototype.move = function (direction) {
 
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
+
+          // Reveal tiles for a short time
+          self.grid.doFlash = true;
+
         } else {
           self.moveTile(tile, positions.farthest);
         }
