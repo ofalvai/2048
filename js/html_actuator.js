@@ -21,6 +21,10 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
+    if(grid.doFlash) {
+      self.flashTiles();
+    }
+
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
 
@@ -56,6 +60,9 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
+
+  // Here comes the "fade" magic:
+  classes.push("tile-fade");
 
   if (tile.value > 2048) classes.push("tile-super");
 
@@ -137,3 +144,18 @@ HTMLActuator.prototype.clearMessage = function () {
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
 };
+
+HTMLActuator.prototype.flashTiles = function() {
+    var tiles = Array.prototype.slice.call(document.getElementsByClassName('tile'));
+    
+    for(i = 0; i < tiles.length; i++) {
+      tiles[i].classList.remove('tile-fade');
+    }
+
+    window.setTimeout(function() {
+      for(i = 0; i < tiles.length; i++) {
+        tiles[i].classList.add('tile-fade');
+      }
+    }, 700)
+    
+}

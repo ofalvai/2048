@@ -41,9 +41,10 @@ body {
 }
 
 h1.title {
-  font-size: 80px;
+  font-size: 60px;
   font-weight: bold;
   margin: 0;
+  margin-top: 10px;
   display: block;
   float: left;
 }
@@ -407,6 +408,18 @@ hr {
       font-size: 10px;
     }
   }
+
+  &.tile-fade .tile-inner {
+    background-color: $tile-color;
+    color: $tile-color;
+    transition: all 0.7s ease-in-out;
+    -webkit-transition: all 0.7s ease-in-out;
+       -moz-transition: all 0.7s ease-in-out;
+         -o-transition: all 0.7s ease-in-out;
+        -ms-transition: all 0.7s ease-in-out;
+            transition: all 0.7s ease-in-out;
+  }
+
 }
 
 @include keyframes(appear) {
