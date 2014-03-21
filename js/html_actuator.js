@@ -23,7 +23,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     if(grid.doFlash) {
       self.flashTiles();
-      console.log('hola')
     }
 
     self.updateScore(metadata.score);
