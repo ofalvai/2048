@@ -412,7 +412,7 @@ hr {
   &.tile-fade .tile-inner {
     background-color: $tile-color;
     color: $tile-color;
-    transition: all 0.7s ease-in-out;
+    box-shadow: none;
     -webkit-transition: all 0.7s ease-in-out;
        -moz-transition: all 0.7s ease-in-out;
          -o-transition: all 0.7s ease-in-out;

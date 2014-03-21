@@ -23,6 +23,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     if(grid.doFlash) {
       self.flashTiles();
+      console.log('hola')
     }
 
     self.updateScore(metadata.score);
@@ -137,6 +138,12 @@ HTMLActuator.prototype.message = function (won) {
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+
+  var tiles = Array.prototype.slice.call(document.getElementsByClassName('tile'));
+
+  for(i = 0; i < tiles.length; i++) {
+    tiles[i].classList.remove('tile-fade');
+  }
 };
 
 HTMLActuator.prototype.clearMessage = function () {
@@ -156,6 +163,5 @@ HTMLActuator.prototype.flashTiles = function() {
       for(i = 0; i < tiles.length; i++) {
         tiles[i].classList.add('tile-fade');
       }
-    }, 700)
-    
+    }, 0) // Hax :'(
 }
